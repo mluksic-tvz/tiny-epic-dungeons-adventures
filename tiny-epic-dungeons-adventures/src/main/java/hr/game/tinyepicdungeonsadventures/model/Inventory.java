@@ -20,4 +20,8 @@ public class Inventory {
     public boolean removeItem(Item item) {
         return items.remove(item);
     }
+
+    public void clear() {
+        items.clear();
+    }
 }

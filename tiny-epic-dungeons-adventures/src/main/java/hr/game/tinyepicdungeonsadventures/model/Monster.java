@@ -9,7 +9,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor(force = true)
 public class Monster extends Character {
-    public Monster(String name, int maxHealth) {
-        super(name, maxHealth);
+    private final MonsterType type;
+
+    public Monster(MonsterType type) {
+        super(type.getName(), type.getMaxHealth());
+        this.type = type;
     }
 }

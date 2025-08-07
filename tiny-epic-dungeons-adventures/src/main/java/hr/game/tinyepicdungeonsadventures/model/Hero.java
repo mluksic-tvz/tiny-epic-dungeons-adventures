@@ -16,12 +16,16 @@ import java.util.List;
 public class Hero extends Character {
     private int mana;
     private int maxMana;
+    private int speed;
+    private int maxSpeed;
     private List<Spell> spells = new ArrayList<>();
 
-    public Hero(String name, int maxHealth, int maxMana) {
+    public Hero(String name, int maxHealth, int maxMana, int speed) {
         super(name, maxHealth);
         this.maxMana = maxMana;
         this.mana = maxMana;
+        this.maxSpeed = speed;
+        this.speed = speed;
     }
 
     public void learnSpell(Spell spell) {
