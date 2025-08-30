@@ -1,0 +1,18 @@
+.hero-card {
+    -fx-border-color: #8B5E3C;
+    -fx-border-width: 3;
+    -fx-border-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 12, 0.2, 0, 4);
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+}
+
+.hero-card:hover {
+    -fx-scale-x: 1.08;
+    -fx-scale-y: 1.08;
+}
+
+.hero-card:selected {
+    -fx-border-color: #FFD700;
+    -fx-border-width: 5;
+}

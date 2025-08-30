@@ -11,7 +11,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 
 public class HeroicAction extends Action {
-    private static final Logger logger = LogManager.getLogger(HeroicAction.class);
+    private static final Logger log = LogManager.getLogger(HeroicAction.class);
     private static final int BASE_DAMAGE = 1;
 
     @Override
@@ -20,7 +20,7 @@ public class HeroicAction extends Action {
         Room room = state.getCurrentRoom(player);
 
         if (room == null) {
-            logger.warn("{} has no current room set—skipping heroic action.", player.getHero().getName());
+            log.warn("{} has no current room set—skipping heroic action.", player.getHero().getName());
             return;
         }
 
@@ -40,39 +40,39 @@ public class HeroicAction extends Action {
         Spell spell = spells.getFirst();
 
         if (player.getHero().getMana() < spell.getCost()) {
-            logger.info("{} lacks mana ({}/{}) for {}.", player.getHero().getName(), player.getHero().getMana(), spell.getCost(), spell.getName());
+            log.info("{} lacks mana ({}/{}) for {}.", player.getHero().getName(), player.getHero().getMana(), spell.getCost(), spell.getName());
             return;
         }
 
         if (!room.hasMonsters()) {
-            logger.info("{} has no monsters to cast {} on.", player.getHero().getName(), spell.getName());
+            log.info("{} has no monsters to cast {} on.", player.getHero().getName(), spell.getName());
             return;
         }
 
         Monster monster = room.getMonsters().getFirst();
         player.getHero().castSpell(spell, monster);
         monster.takeDamage(spell.getPower());
-        logger.info("{} casts {} (power {}) on {} (HP now {}).", player.getHero().getName(), spell.getName(), spell.getPower(), monster.getName(), monster.getHealth());
+        log.info("{} casts {} (power {}) on {} (HP now {}).", player.getHero().getName(), spell.getName(), spell.getPower(), monster.getName(), monster.getHealth());
 
         if (!monster.isAlive()) {
             room.removeDefeatedMonster();
-            logger.info("{} is defeated by a spell!", monster.getName());
+            log.info("{} is defeated by a spell!", monster.getName());
         }
     }
 
     private void attack(Player player, Room room) {
         if (!room.hasMonsters()) {
-            logger.info("{} has no monsters to attack.", player.getHero().getName());
+            log.info("{} has no monsters to attack.", player.getHero().getName());
             return;
         }
 
         Monster monster = room.getMonsters().getFirst();
         monster.takeDamage(BASE_DAMAGE);
-        logger.info("{} attacks {} for {} damage (HP now {}).", player.getHero().getName(), monster.getName(), BASE_DAMAGE, monster.getHealth());
+        log.info("{} attacks {} for {} damage (HP now {}).", player.getHero().getName(), monster.getName(), BASE_DAMAGE, monster.getHealth());
 
         if (!monster.isAlive()) {
             room.removeDefeatedMonster();
-            logger.info("{} is slain!", monster.getName());
+            log.info("{} is slain!", monster.getName());
         }
     }
 }

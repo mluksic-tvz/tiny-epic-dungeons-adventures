@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class GameState {
 
-    private static final Logger logger = LogManager.getLogger(GameState.class);
+    private static final Logger log = LogManager.getLogger(GameState.class);
     private static final int MAX_TORCH = 5;
 
     @Getter
@@ -39,17 +39,17 @@ public class GameState {
 
     public void initialize() {
         torchPosition = 0;
-        logger.info("Torch reset to position {}", torchPosition);
+        log.info("Torch reset to position {}", torchPosition);
 
         dungeon.shuffleAndPrepareCardDecks();
-        logger.info("Shuffled and prepared room & loot decks");
+        log.info("Shuffled and prepared room & loot decks");
 
         for (Player player : players) {
             player.getInventory().clear();
             Item lootItem = dungeon.drawLoot();
             if (lootItem != null) {
                 player.getInventory().addItem(lootItem);
-                logger.info("{} draws starting loot: {}",
+                log.info("{} draws starting loot: {}",
                         player.getHero().getName(), lootItem.getName());
             }
         }
@@ -58,7 +58,7 @@ public class GameState {
             Room room = dungeon.drawRoom();
             if (room != null) {
                 room.reveal();
-                logger.info("Revealed starting room: {}", room.getId());
+                log.info("Revealed starting room: {}", room.getId());
             }
         }
     }
@@ -74,25 +74,25 @@ public class GameState {
 
     public void advanceTurn() {
         if (isGameOver) {
-            logger.warn("Game is already over, cannot advance turn");
+            log.warn("Game is already over, cannot advance turn");
             return;
         }
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
-        logger.info("Turn advanced to player index {}", currentPlayerIndex);
+        log.info("Turn advanced to player index {}", currentPlayerIndex);
     }
 
     public void advanceTorch() {
         if (isGameOver) {
-            logger.warn("Game is already over, cannot advance torch");
+            log.warn("Game is already over, cannot advance torch");
             return;
         }
         torchPosition = (torchPosition + 1) % (MAX_TORCH + 1);
-        logger.info("Torch advanced to position {}", torchPosition);
+        log.info("Torch advanced to position {}", torchPosition);
     }
 
     public void endGame() {
         isGameOver = true;
-        logger.info("Game over! Heroes have lost.");
+        log.info("Game over! Heroes have lost.");
     }
 
     public void setCurrentRoom(Player player, Room room) {

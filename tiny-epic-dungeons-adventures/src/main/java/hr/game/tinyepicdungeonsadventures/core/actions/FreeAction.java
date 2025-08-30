@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FreeAction extends Action {
-    private static final Logger logger = LogManager.getLogger(FreeAction.class);
+    private static final Logger log = LogManager.getLogger(FreeAction.class);
 
     @Override
     public void execute(GameState state, Player player) {
@@ -21,7 +21,7 @@ public class FreeAction extends Action {
                 if (player.getInventory().removeItem(item)) {
                     int heal = item.getHealAmount();
                     player.getHero().heal(heal);
-                    logger.info("{} uses {} and heals {} HP (now {}).", player.getHero().getName(), item.getName(), heal, player.getHero().getHealth());
+                    log.info("{} uses {} and heals {} HP (now {}).", player.getHero().getName(), item.getName(), heal, player.getHero().getHealth());
                 }
                 return;
             }
@@ -31,12 +31,12 @@ public class FreeAction extends Action {
         for (Item item : items) {
             if (!item.isHealingPotion()) {
                 if (player.getInventory().removeItem(item)) {
-                    logger.info("{} discards loot: {}.", player.getHero().getName(), item.getName());
+                    log.info("{} discards loot: {}.", player.getHero().getName(), item.getName());
                 }
                 return;
             }
         }
 
-        logger.info("{} takes no free actions.", player.getHero().getName());
+        log.info("{} takes no free actions.", player.getHero().getName());
     }
 }
