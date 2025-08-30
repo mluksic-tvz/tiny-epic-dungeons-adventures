@@ -1,17 +1,16 @@
 package hr.game.tinyepicdungeonsadventures.ui;
 
 import hr.game.tinyepicdungeonsadventures.TinyEpicDungeonsAdventures;
+import hr.game.tinyepicdungeonsadventures.utils.DialogUtils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import lombok.Setter;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class MainMenuController {
-
-    private static final Logger log = LogManager.getLogger(MainMenuController.class);
 
     @Setter
     private TinyEpicDungeonsAdventures app;
@@ -29,12 +28,7 @@ public class MainMenuController {
                 app.showHeroSelection();
             } catch (Exception ex) {
                 log.error("Failed to open HeroSelection scene", ex);
-
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Unexpected Error");
-                alert.setHeaderText("Something went wrong");
-                alert.setContentText("Hero selection couldn't be loaded. Please try again.");
-                alert.showAndWait();
+                DialogUtils.showDialog(Alert.AlertType.ERROR, "Unexpected Error", "Something went wrong", "Hero selection couldn't be loaded. Please try again.");
             }
         });
 

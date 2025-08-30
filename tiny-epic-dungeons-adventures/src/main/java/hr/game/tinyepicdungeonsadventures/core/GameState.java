@@ -5,16 +5,15 @@ import hr.game.tinyepicdungeonsadventures.model.Item;
 import hr.game.tinyepicdungeonsadventures.model.Player;
 import hr.game.tinyepicdungeonsadventures.model.Room;
 import lombok.Getter;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class GameState {
 
-    private static final Logger log = LogManager.getLogger(GameState.class);
     private static final int MAX_TORCH = 5;
 
     @Getter

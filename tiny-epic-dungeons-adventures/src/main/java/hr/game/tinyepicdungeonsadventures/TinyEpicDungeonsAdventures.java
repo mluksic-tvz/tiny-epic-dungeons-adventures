@@ -1,18 +1,20 @@
 package hr.game.tinyepicdungeonsadventures;
 
+import hr.game.tinyepicdungeonsadventures.model.ApplicationConfiguration;
 import hr.game.tinyepicdungeonsadventures.ui.MainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class TinyEpicDungeonsAdventures extends Application {
 
+    public static final ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration();
+
     private Stage primaryStage;
-    private static final Logger log = LogManager.getLogger(TinyEpicDungeonsAdventures.class);
 
     @Override
     public void start(Stage stage) {
