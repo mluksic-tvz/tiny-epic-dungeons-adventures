@@ -1,6 +1,5 @@
 package hr.game.tinyepicdungeonsadventures.utils;
 
-import hr.game.tinyepicdungeonsadventures.TinyEpicDungeonsAdventures;
 import hr.game.tinyepicdungeonsadventures.chat.ChatRemoteService;
 import hr.game.tinyepicdungeonsadventures.exception.ChatException;
 import javafx.animation.Animation;

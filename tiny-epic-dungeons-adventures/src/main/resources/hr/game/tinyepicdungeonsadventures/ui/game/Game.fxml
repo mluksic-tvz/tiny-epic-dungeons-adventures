@@ -147,7 +147,7 @@
                         <TextField fx:id="chatInputField" promptText="Type a message..." styleClass="chat-input" />
                         <HBox alignment="CENTER" prefHeight="50.0">
                             <children>
-                                <Button fx:id="sendMessageButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSendMessage" styleClass="action-button" text="SEND" textAlignment="CENTER" textFill="#fac888">
+                                <Button fx:id="sendMessageButton" contentDisplay="CENTER" mnemonicParsing="false" styleClass="action-button" text="SEND" textAlignment="CENTER" textFill="#fac888">
                                     <graphic>
                                         <ImageView fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                                             <image>

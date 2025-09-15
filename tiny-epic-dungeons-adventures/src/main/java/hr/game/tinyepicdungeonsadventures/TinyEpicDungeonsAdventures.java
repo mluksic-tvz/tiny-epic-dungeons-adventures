@@ -1,5 +1,6 @@
 package hr.game.tinyepicdungeonsadventures;
 
+import hr.game.tinyepicdungeonsadventures.chat.ChatManager;
 import hr.game.tinyepicdungeonsadventures.model.ApplicationConfiguration;
 import hr.game.tinyepicdungeonsadventures.model.Hero;
 import hr.game.tinyepicdungeonsadventures.ui.GameController;
@@ -10,6 +11,9 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
@@ -95,6 +99,15 @@ public class TinyEpicDungeonsAdventures extends Application {
 
             GameController controller = loader.getController();
             controller.setApp(this);
+
+            ChatManager chatManager = new ChatManager(
+                    (TextArea) scene.lookup("#chatTextArea"),
+                    (TextField) scene.lookup("#chatInputField"),
+                    (Button) scene.lookup("#sendMessageButton")
+            );
+
+            controller.setChatManager(chatManager);
+
             controller.initializeGame(selectedHeroes);
 
             primaryStage.setTitle("Tiny Epic Dungeon Adventures - Game");

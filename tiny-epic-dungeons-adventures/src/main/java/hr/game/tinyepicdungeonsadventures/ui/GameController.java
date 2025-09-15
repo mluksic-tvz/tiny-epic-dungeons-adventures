@@ -1,23 +1,13 @@
 package hr.game.tinyepicdungeonsadventures.ui;
 
 import hr.game.tinyepicdungeonsadventures.TinyEpicDungeonsAdventures;
-import hr.game.tinyepicdungeonsadventures.chat.ChatClient;
-import hr.game.tinyepicdungeonsadventures.chat.ChatRemoteService;
-import hr.game.tinyepicdungeonsadventures.core.DungeonFactory;
-import hr.game.tinyepicdungeonsadventures.core.GameEngine;
-import hr.game.tinyepicdungeonsadventures.core.GameState;
-import hr.game.tinyepicdungeonsadventures.core.GameTurnManager;
+import hr.game.tinyepicdungeonsadventures.chat.ChatManager;
+import hr.game.tinyepicdungeonsadventures.core.*;
 import hr.game.tinyepicdungeonsadventures.model.*;
-import hr.game.tinyepicdungeonsadventures.thread.SendMessageTask;
-import hr.game.tinyepicdungeonsadventures.utils.ChatUtils;
 import hr.game.tinyepicdungeonsadventures.utils.DialogUtils;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -31,9 +21,12 @@ public class GameController {
     @Setter
     private TinyEpicDungeonsAdventures app;
 
+    @Setter
+    private ChatManager chatManager;
+
     private GameEngine gameEngine;
     private GameTurnManager turnManager;
-    private ChatRemoteService chatRemoteService;
+    private DungeonDrawer dungeonDrawer;
 
     @FXML private Label heroNameLabel;
     @FXML private ProgressBar healthProgressBar;
@@ -43,10 +36,6 @@ public class GameController {
     @FXML private ListView<Item> inventoryListView;
     @FXML private Text turnIndicatorText;
     @FXML private GridPane dungeonGridPane;
-    @FXML private TextArea gameLogTextArea;
-    @FXML private TextArea chatTextArea;
-    @FXML private TextField chatInputField;
-    @FXML private Button sendMessageButton;
     @FXML private Label torchStateLabel;
     @FXML private Button moveButton;
     @FXML private Button heroicActionButton;
@@ -67,29 +56,14 @@ public class GameController {
 
         this.turnManager = new GameTurnManager();
         this.gameEngine = new GameEngine(players, dungeon);
-        this.gameEngine.startGame();
+        this.dungeonDrawer = new DungeonDrawer(dungeonGridPane, this);
+        this.chatManager.initializeChat();
+        gameEngine.startGame();
 
         log.info("Game started with {} players!", players.size());
 
         inventoryListView.setOnMouseClicked(event -> onInventoryItemClicked());
-
-        setupChat();
         updateUI();
-    }
-
-    private void setupChat() {
-        try {
-            this.chatRemoteService = ChatClient.connect();
-            Timeline chatTimeline = ChatUtils.getChatTimeline(chatRemoteService, chatTextArea);
-            chatTimeline.play();
-
-        } catch (Exception e) {
-            log.error("Failed to connect to chat service", e);
-            DialogUtils.showDialog(Alert.AlertType.WARNING, "Chat Unavailable", "Could not connect to the chat service.", "Please ensure the chat server is running.");
-            chatInputField.setDisable(true);
-            sendMessageButton.setDisable(true);
-            chatTextArea.setText("Chat service is not available.");
-        }
     }
 
     @FXML
@@ -144,33 +118,13 @@ public class GameController {
         updateUI();
     }
 
-    @FXML
-    private void onSendMessage() {
-        String message = chatInputField.getText();
-
-        if (message == null || message.isBlank()) {
-            return;
-        }
-
-        SendMessageTask sendMessageTask = new SendMessageTask(chatRemoteService, message);
-
-        sendMessageTask.setOnSucceeded(e -> Platform.runLater(() -> chatInputField.clear()));
-
-        sendMessageTask.setOnFailed(e -> {
-            log.error("Failed to send chat message", sendMessageTask.getException());
-            DialogUtils.showDialog(Alert.AlertType.ERROR, "Chat Error", "Could not send message.", "");
-        });
-
-        new Thread(sendMessageTask).start();
-    }
-
     private void updateUI() {
         GameState currentState = gameEngine.getState();
         Player currentPlayer = currentState.getCurrentPlayer();
 
         updatePlayerInfo(currentPlayer);
         updateTorchTrack(currentState);
-        updateDungeonView(currentState);
+        dungeonDrawer.render(currentState);
 
         turnIndicatorText.setText("Turn: " + currentPlayer.getId() + " (" + currentPlayer.getHero().getName() + ")");
     }
@@ -197,7 +151,7 @@ public class GameController {
         });
     }
 
-    private void onInventoryItemClicked() {
+    public void onInventoryItemClicked() {
         Item selectedItem = inventoryListView.getSelectionModel().getSelectedItem();
 
         if (selectedItem == null) {
@@ -223,56 +177,7 @@ public class GameController {
         torchStateLabel.setText(String.format("Torch: %d / 5", currentPosition));
     }
 
-    private void updateDungeonView(GameState state) {
-        dungeonGridPane.getChildren().clear();
-        clearTargetSelection();
-
-        Player currentPlayer = state.getCurrentPlayer();
-        Room currentPlayersRoom = state.getCurrentRoom(currentPlayer);
-
-        int col = 0;
-        int row = 0;
-        for (Room room : state.getDungeon().getRooms()) {
-            if (room.isRevealed()) {
-                VBox roomBox = createRoomBox(room);
-
-                if (currentPlayersRoom != null && currentPlayersRoom.equals(room)) {
-                    roomBox.getStyleClass().add("current-player-room");
-                }
-
-                dungeonGridPane.add(roomBox, col, row);
-                col++;
-                if (col % 5 == 0) { col = 0; row++; }
-            }
-        }
-    }
-
-    private VBox createRoomBox(Room room) {
-        VBox roomBox = new VBox(5);
-        roomBox.getStyleClass().add("room-box");
-        Label roomIdLabel = new Label(room.getId());
-        roomIdLabel.setStyle("-fx-text-fill: #fac888; -fx-font-family: 'MedievalSharp'; -fx-font-size: 16px;");
-        roomBox.getChildren().add(roomIdLabel);
-
-        for (Monster monster : room.getMonsters()) {
-            Label monsterLabel = new Label(monster.getName() + " (HP: " + monster.getHealth() + ")");
-            monsterLabel.setStyle("-fx-text-fill: #ff6b6b; -fx-font-weight: bold;");
-            monsterLabel.setCursor(Cursor.HAND);
-            monsterLabel.setOnMouseClicked(e -> onMonsterClicked(monster, monsterLabel));
-            roomBox.getChildren().add(monsterLabel);
-        }
-
-        for (Item item : room.getItems()) {
-            Label itemLabel = new Label(item.getName());
-            itemLabel.setStyle("-fx-text-fill: #ffd700;");
-            itemLabel.setCursor(Cursor.HAND);
-            itemLabel.setOnMouseClicked(e -> onLootClicked(item));
-            roomBox.getChildren().add(itemLabel);
-        }
-        return roomBox;
-    }
-
-    private void onMonsterClicked(Monster monster, Label monsterLabel) {
+    public void onMonsterClicked(Monster monster, Label monsterLabel) {
         clearTargetSelection();
 
         selectedMonsterTarget = monster;
@@ -283,7 +188,7 @@ public class GameController {
         heroicActionButton.setDisable(false);
     }
 
-    private void onLootClicked(Item item) {
+    public void onLootClicked(Item item) {
         GameState state = gameEngine.getState();
         Player currentPlayer = state.getCurrentPlayer();
         Room currentRoom = state.getCurrentRoom(currentPlayer);
@@ -296,7 +201,7 @@ public class GameController {
         }
     }
 
-    private void clearTargetSelection() {
+    public void clearTargetSelection() {
         selectedMonsterTarget = null;
         if (selectedMonsterLabel != null) {
             selectedMonsterLabel.setStyle("-fx-text-fill: #ff6b6b; -fx-font-weight: bold;");

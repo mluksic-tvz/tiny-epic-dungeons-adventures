@@ -1,5 +1,6 @@
 package hr.game.tinyepicdungeonsadventures.chat;
 
+import hr.game.tinyepicdungeonsadventures.AppConfiguration;
 import hr.game.tinyepicdungeonsadventures.exception.ChatException;
 
 import javax.naming.Context;
@@ -8,21 +9,23 @@ import javax.naming.NamingException;
 import java.util.HashMap;
 import java.util.Hashtable;
 
-import static hr.game.tinyepicdungeonsadventures.chat.ChatRemoteService.*;
-
 public class ChatClient {
 
     private ChatClient() {}
 
     public static ChatRemoteService connect() {
         try {
+            String host = AppConfiguration.getHost();
+            int port = AppConfiguration.getPort();
+            String serviceName = AppConfiguration.getServiceName();
+
             HashMap<String, String> env = new HashMap<>();
             env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.rmi.registry.RegistryContextFactory");
-            env.put(Context.PROVIDER_URL, "rmi://" + RMI_HOST + ":" + RMI_PORT);
+            env.put(Context.PROVIDER_URL, "rmi://" + host + ":" + port);
 
             Context context = new InitialContext(new Hashtable<>(env));
 
-            Object remoteObject = context.lookup(SERVICE_NAME);
+            Object remoteObject = context.lookup(serviceName);
 
             return (ChatRemoteService) remoteObject;
 
