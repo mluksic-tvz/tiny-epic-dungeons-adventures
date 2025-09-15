@@ -2,6 +2,7 @@ package hr.game.tinyepicdungeonsadventures.model;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @ToString
@@ -9,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
+@Slf4j
 public abstract class Character {
     protected String name;
     protected int health;
@@ -21,7 +23,12 @@ public abstract class Character {
     }
 
     public void takeDamage(int amount) {
-        health = Math.max(0, health - amount);
+        int healthBefore = this.health;
+        this.health = Math.max(0, this.health - amount);
+
+        if (healthBefore > 0 && this.health == 0) {
+            log.warn("Character {} has been defeated!", this.name);
+        }
     }
 
     public void heal(int amount) {

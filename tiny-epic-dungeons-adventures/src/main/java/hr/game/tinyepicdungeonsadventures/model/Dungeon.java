@@ -6,15 +6,19 @@ import java.util.*;
 
 @Getter
 @ToString
-@NoArgsConstructor(force = true)
-@AllArgsConstructor
 public class Dungeon {
 
-    private final List<Room> rooms = new ArrayList<>();
-    private final List<Item> lootPool = new ArrayList<>();
-    private final List<Monster> monstersAtTheEntrance = new ArrayList<>();
+    private final List<Room> rooms;
+    private final List<Item> lootPool;
+    private final List<Monster> monstersAtTheEntrance;
     private Deque<Room> roomCardDeck;
     private Deque<Item> lootCardDeck;
+
+    public Dungeon(List<Room> rooms, List<Item> lootPool) {
+        this.rooms = new ArrayList<>(Objects.requireNonNull(rooms));
+        this.lootPool = new ArrayList<>(Objects.requireNonNull(lootPool));
+        this.monstersAtTheEntrance = new ArrayList<>();
+    }
 
     public void shuffleAndPrepareCardDecks() {
         Collections.shuffle(lootPool);

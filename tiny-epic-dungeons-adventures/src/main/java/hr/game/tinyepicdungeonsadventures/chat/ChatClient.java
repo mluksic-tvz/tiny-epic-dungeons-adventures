@@ -1,23 +1,33 @@
 package hr.game.tinyepicdungeonsadventures.chat;
 
 import hr.game.tinyepicdungeonsadventures.exception.ChatException;
-import hr.game.tinyepicdungeonsadventures.jndi.ConfigurationKey;
-import hr.game.tinyepicdungeonsadventures.jndi.ConfigurationReader;
 
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import java.util.HashMap;
+import java.util.Hashtable;
+
+import static hr.game.tinyepicdungeonsadventures.chat.ChatRemoteService.*;
 
 public class ChatClient {
+
     private ChatClient() {}
 
     public static ChatRemoteService connect() {
         try {
-            String host = ConfigurationReader.getStringValue(ConfigurationKey.RMI_HOST);
-            int port = ConfigurationReader.getIntegerValue(ConfigurationKey.RMI_PORT);
-            Registry registry = LocateRegistry.getRegistry(host, port);
-            return (ChatRemoteService) registry.lookup(ChatRemoteService.REMOTE_OBJECT_NAME);
-        } catch (Exception e) {
-            throw new ChatException("Cannot connect to chat service", e);
+            HashMap<String, String> env = new HashMap<>();
+            env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.rmi.registry.RegistryContextFactory");
+            env.put(Context.PROVIDER_URL, "rmi://" + RMI_HOST + ":" + RMI_PORT);
+
+            Context context = new InitialContext(new Hashtable<>(env));
+
+            Object remoteObject = context.lookup(SERVICE_NAME);
+
+            return (ChatRemoteService) remoteObject;
+
+        } catch (NamingException e) {
+            throw new ChatException("Cannot find chat service in JNDI directory. Check if server has been started.", e);
         }
     }
 }

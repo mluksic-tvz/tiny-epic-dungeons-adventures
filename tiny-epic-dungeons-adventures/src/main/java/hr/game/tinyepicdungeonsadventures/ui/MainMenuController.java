@@ -17,7 +17,6 @@ public class MainMenuController {
 
     @FXML
     private Button startButton;
-
     @FXML
     private Button quitButton;
 
@@ -25,7 +24,7 @@ public class MainMenuController {
     private void initialize() {
         startButton.setOnAction(e -> {
             try {
-                app.showHeroSelection();
+                app.showPlayerSelection();
             } catch (Exception ex) {
                 log.error("Failed to open HeroSelection scene", ex);
                 DialogUtils.showDialog(Alert.AlertType.ERROR, "Unexpected Error", "Something went wrong", "Hero selection couldn't be loaded. Please try again.");

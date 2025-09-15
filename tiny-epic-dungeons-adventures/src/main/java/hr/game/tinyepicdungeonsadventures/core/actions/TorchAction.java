@@ -4,11 +4,10 @@ import hr.game.tinyepicdungeonsadventures.core.GameState;
 import hr.game.tinyepicdungeonsadventures.model.Monster;
 import hr.game.tinyepicdungeonsadventures.model.MonsterType;
 import hr.game.tinyepicdungeonsadventures.model.Player;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class TorchAction extends Action {
-    private static final Logger log = LogManager.getLogger(TorchAction.class);
     private static final int MAX_TORCH = 5;
 
     @Override

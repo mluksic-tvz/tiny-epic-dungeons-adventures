@@ -3,14 +3,13 @@ package hr.game.tinyepicdungeonsadventures.core.actions;
 import hr.game.tinyepicdungeonsadventures.core.GameState;
 import hr.game.tinyepicdungeonsadventures.model.Item;
 import hr.game.tinyepicdungeonsadventures.model.Player;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class FreeAction extends Action {
-    private static final Logger log = LogManager.getLogger(FreeAction.class);
 
     @Override
     public void execute(GameState state, Player player) {

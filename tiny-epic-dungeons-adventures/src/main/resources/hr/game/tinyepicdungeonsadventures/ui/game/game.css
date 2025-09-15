@@ -1,0 +1,93 @@
+.info-panel {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+    -fx-border-color: #4a4a4a;
+    -fx-border-width: 2;
+}
+
+.info-label {
+    -fx-font-family: "Segoe UI";
+    -fx-font-size: 16px;
+    -fx-text-fill: #cccccc;
+}
+
+.info-label-header {
+    -fx-font-family: "MedievalSharp";
+    -fx-font-size: 22px;
+    -fx-text-fill: #fac888;
+}
+
+.info-label-value {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+    -fx-padding: 0 0 10px 5px;
+}
+
+.health-bar .bar {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 0%, #ff416c, #ff4b2b);
+}
+.mana-bar .bar {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 0%, #1cb5e0, #000046);
+}
+
+.inventory-list, .log-area, .chat-area, .chat-input {
+    -fx-background-color: rgba(10, 10, 10, 0.75);
+    -fx-border-color: #4a4a4a;
+    -fx-border-width: 1;
+    -fx-background-insets: 0;
+}
+
+.log-area .scroll-pane,
+.log-area .scroll-pane .viewport,
+.log-area .scroll-pane .content,
+.chat-area .scroll-pane,
+.chat-area .scroll-pane .viewport,
+.chat-area .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+.log-area .content, .chat-area .content {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.log-area .text,
+.chat-area .text {
+    -fx-fill: #e0e0e0;
+}
+
+.inventory-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #e0e0e0;
+    -fx-font-family: "MedievalSharp";
+    -fx-font-size: 16px;
+}
+
+.chat-input {
+    -fx-prompt-text-fill: #888888;
+    -fx-text-fill: white;
+}
+
+.title-large {
+    -fx-font-family: "MedievalSharp";
+    -fx-font-size: 32px;
+    -fx-fill: linear-gradient(from 0% 0% to 0% 100%, #D2B48C 0%, #8B5E3C 100%);
+    -fx-stroke: #3F2A1A;
+    -fx-stroke-width: 2px;
+    -fx-effect: dropshadow(one-pass-box, rgba(200, 150, 100, 0.6), 6, 0, 0, 2);
+}
+
+.room-box {
+    -fx-background-color: rgba(0, 0, 0, 0.5);
+    -fx-border-color: #6e4a2f;
+    -fx-border-width: 2;
+    -fx-padding: 10;
+    -fx-alignment: center;
+}
+
+.current-player-room {
+    -fx-border-color: #FFD700;
+    -fx-border-width: 4;
+    -fx-border-radius: 5;
+    -fx-effect: dropshadow(gaussian, rgba(255, 215, 0, 0.7), 20, 0.4, 0, 0);
+}

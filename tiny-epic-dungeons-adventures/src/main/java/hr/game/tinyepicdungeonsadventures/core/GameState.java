@@ -53,11 +53,23 @@ public class GameState {
             }
         }
 
-        for (int i = 0; i < 3; i++) {
-            Room room = dungeon.drawRoom();
-            if (room != null) {
-                room.reveal();
-                log.info("Revealed starting room: {}", room.getId());
+        Room entrance = dungeon.drawRoom();
+
+        if (entrance != null) {
+            entrance.reveal();
+            log.info("Revealed entrance room: {}", entrance.getId());
+
+            for (Player player : players) {
+                setCurrentRoom(player, entrance);
+                log.info("Player {} starts in {}.", player.getId(), entrance.getId());
+            }
+        }
+
+        for (int i = 0; i < 2; i++) {
+            Room adjacentRoom = dungeon.drawRoom();
+            if (adjacentRoom != null) {
+                adjacentRoom.reveal();
+                log.info("Revealed adjacent room: {}", adjacentRoom.getId());
             }
         }
     }
@@ -92,6 +104,15 @@ public class GameState {
     public void endGame() {
         isGameOver = true;
         log.info("Game over! Heroes have lost.");
+    }
+
+    public void checkForLossCondition() {
+        boolean allPlayersDefeated = players.stream().allMatch(p -> !p.getHero().isAlive());
+
+        if (allPlayersDefeated) {
+            log.error("All heroes have been defeated! The game is over.");
+            endGame();
+        }
     }
 
     public void setCurrentRoom(Player player, Room room) {

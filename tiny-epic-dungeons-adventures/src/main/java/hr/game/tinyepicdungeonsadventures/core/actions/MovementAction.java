@@ -4,11 +4,10 @@ import hr.game.tinyepicdungeonsadventures.core.GameState;
 import hr.game.tinyepicdungeonsadventures.model.Item;
 import hr.game.tinyepicdungeonsadventures.model.Player;
 import hr.game.tinyepicdungeonsadventures.model.Room;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class MovementAction extends Action {
-    private static final Logger log = LogManager.getLogger(MovementAction.class);
 
     @Override
     public void execute(GameState state, Player player) {
@@ -23,13 +22,12 @@ public class MovementAction extends Action {
             return;
         }
         room.reveal();
+        state.setCurrentRoom(player, room);
         log.info("{} enters room: {}", player.getHero().getName(), room.getId());
 
-        // Loot if present
+        // There is loot in the room that can be taken
         if (room.hasItems()) {
-            Item loot = room.takeItem();
-            player.getInventory().addItem(loot);
-            log.info("{} finds loot: {}", player.getHero().getName(), loot.getName());
+            log.info("Loot has been revealed in the room! Player can now interact with it.");
         }
 
         // Monster encountered (hero takes 1 fixed damage)

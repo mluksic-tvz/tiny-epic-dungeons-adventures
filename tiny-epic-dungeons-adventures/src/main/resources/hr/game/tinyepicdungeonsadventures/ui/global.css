@@ -7,6 +7,15 @@
     -fx-effect: dropshadow(one-pass-box, rgba(200, 150, 100, 0.6), 6, 0, 0, 2);
 }
 
+.subtitle {
+    -fx-font-family: 'MedievalSharp', cursive;
+    -fx-font-size: 42px;
+    -fx-fill: linear-gradient(from 0% 0% to 0% 100%, #D2B48C 0%, #8B5E3C 100%);
+    -fx-stroke: #3F2A1A;
+    -fx-stroke-width: 2px;
+    -fx-effect: dropshadow(one-pass-box, rgba(200, 150, 100, 0.6), 6, 0, 0, 2);
+}
+
 .action-button {
     -fx-background-color: transparent;
     -fx-background-radius: 0;

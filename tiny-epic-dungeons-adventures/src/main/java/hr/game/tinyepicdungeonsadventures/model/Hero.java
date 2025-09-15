@@ -33,7 +33,10 @@ public class Hero extends Character {
     }
 
     public boolean castSpell(Spell spell, Character target) {
-        if (!spells.contains(spell) || mana < spell.getCost()) return false;
+
+        if (!spells.contains(spell) || mana < spell.getCost())
+            return false;
+
         mana -= spell.getCost();
         target.takeDamage(spell.getPower());
         return true;

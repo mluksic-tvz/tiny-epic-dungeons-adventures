@@ -41,11 +41,11 @@
                <GridPane.margin>
                   <Insets top="80.0" />
                </GridPane.margin></Text>
-            <VBox alignment="BOTTOM_RIGHT" spacing="25.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <VBox alignment="BOTTOM_RIGHT" spacing="5.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <children>
                   <Button fx:id="startButton" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" styleClass="action-button" text="START" textFill="#fac888">
                      <graphic>
-                        <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/ui/button-background.png" />
                            </image>
@@ -57,7 +57,7 @@
                   </Button>
                   <Button fx:id="quitButton" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" styleClass="action-button" text="QUIT" textFill="#fac888">
                      <graphic>
-                        <ImageView fitHeight="100.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="200.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/ui/button-background.png" />
                            </image>
@@ -68,6 +68,9 @@
                      </font>
                   </Button>
                </children>
+               <GridPane.margin>
+                  <Insets top="150.0" />
+               </GridPane.margin>
             </VBox>
          </children>
       </GridPane>

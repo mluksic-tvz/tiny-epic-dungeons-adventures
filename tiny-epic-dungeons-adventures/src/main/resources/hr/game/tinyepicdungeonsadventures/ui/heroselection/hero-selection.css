@@ -12,7 +12,8 @@
     -fx-scale-y: 1.08;
 }
 
-.hero-card:selected {
+.hero-card-selected {
     -fx-border-color: #FFD700;
     -fx-border-width: 5;
+    -fx-effect: dropshadow(gaussian, rgba(255, 215, 0, 0.8), 20, 0.5, 0, 0);
 }

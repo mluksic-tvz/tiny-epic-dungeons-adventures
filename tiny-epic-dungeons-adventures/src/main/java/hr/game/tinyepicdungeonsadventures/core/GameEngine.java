@@ -2,30 +2,24 @@ package hr.game.tinyepicdungeonsadventures.core;
 
 import hr.game.tinyepicdungeonsadventures.model.Dungeon;
 import hr.game.tinyepicdungeonsadventures.model.Player;
+import lombok.Getter;
 
 import java.util.List;
 
 public class GameEngine {
 
+    @Getter
     private final GameState state;
-    private final GameTurnManager turnManager;
 
     public GameEngine(List<Player> players, Dungeon dungeon) {
         this.state = new GameState(players, dungeon);
-        this.turnManager = new GameTurnManager();
     }
 
     public void startGame() {
         state.initialize();
     }
 
-    public void nextTurn() {
-        Player current = state.getCurrentPlayer();
-        turnManager.processTurn(state, current);
+    public void advanceTurn() {
         state.advanceTurn();
-    }
-
-    public GameState getGameState() {
-        return state;
     }
 }

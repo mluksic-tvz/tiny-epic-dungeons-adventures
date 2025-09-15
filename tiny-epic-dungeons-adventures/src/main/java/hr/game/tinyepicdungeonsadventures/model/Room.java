@@ -22,15 +22,15 @@ public class Room {
         return !items.isEmpty();
     }
 
-    public Item takeItem() {
-        return items.isEmpty() ? null : items.remove(0);
+    public boolean takeItem(Item item) {
+        return items.remove(item);
     }
 
     public void reveal() {
         revealed = true;
     }
 
-    public Monster removeDefeatedMonster() {
-        return monsters.isEmpty() ? null : monsters.removeFirst();
+    public boolean removeMonster(Monster monster) {
+        return monsters.remove(monster);
     }
 }
