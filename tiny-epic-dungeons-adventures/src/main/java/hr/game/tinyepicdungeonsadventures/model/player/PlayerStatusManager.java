@@ -7,6 +7,13 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 
+/**
+ * Manages the display of a player's status on the Game UI.
+ * <p>
+ * This class is responsible for updating labels, progress bars, and a list view,
+ * with the current stats and inventory of a player.
+ * It provides a single method to refresh the UI based on a provided {@link Player} object.
+ */
 public class PlayerStatusManager {
 
     private final Label heroNameLabel;

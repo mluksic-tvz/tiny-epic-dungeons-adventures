@@ -9,6 +9,12 @@ import javafx.scene.control.Button;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Controller for the MainMenu UI.
+ * <p>
+ * This class handles user interactions on the main menu, such as starting a new game
+ * or quitting the application. It acts as the entry point for the game's UI flow.
+ */
 @Slf4j
 public class MainMenuController {
 

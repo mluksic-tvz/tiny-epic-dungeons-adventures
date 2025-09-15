@@ -5,6 +5,14 @@ import hr.game.tinyepicdungeonsadventures.model.player.Player;
 import hr.game.tinyepicdungeonsadventures.model.dungeon.Room;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Represents the player's Movement Action for the turn, allowing them to explore the dungeon.
+ * <p>
+ * This specific implementation simplifies the board game's movement rules by always
+ * drawing and revealing one new room from the dungeon deck and moving the player into it.
+ * It also handles the "ambush" mechanic, where a hero immediately takes damage
+ * upon entering a room with monsters.
+ */
 @Slf4j
 public class MovementAction extends Action {
 

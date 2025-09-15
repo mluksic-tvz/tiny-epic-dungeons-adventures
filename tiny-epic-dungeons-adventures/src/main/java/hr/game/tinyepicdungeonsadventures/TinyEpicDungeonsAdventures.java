@@ -1,7 +1,7 @@
 package hr.game.tinyepicdungeonsadventures;
 
 import hr.game.tinyepicdungeonsadventures.chat.ChatManager;
-import hr.game.tinyepicdungeonsadventures.model.AppConfiguration;
+import hr.game.tinyepicdungeonsadventures.model.player.PlayerConfiguration;
 import hr.game.tinyepicdungeonsadventures.model.character.hero.Hero;
 import hr.game.tinyepicdungeonsadventures.ui.GameController;
 import hr.game.tinyepicdungeonsadventures.ui.HeroSelectionController;
@@ -23,7 +23,7 @@ import java.util.List;
 @Slf4j
 public class TinyEpicDungeonsAdventures extends Application {
 
-    public static final AppConfiguration applicationConfiguration = new AppConfiguration();
+    public static final PlayerConfiguration applicationConfiguration = new PlayerConfiguration();
 
     private Stage primaryStage;
 

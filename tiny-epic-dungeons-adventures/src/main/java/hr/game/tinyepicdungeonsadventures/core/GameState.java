@@ -12,6 +12,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Manages the complete state of the game.
+ * <p>
+ * It tracks all essential game data, including the list of players, the dungeon,
+ * the current player's turn, the position of the torch, and
+ * the overall game status (e.g., in progress, game over, or won). It provides methods
+ * for initializing the game, advancing turns, and checking for win/loss conditions.
+ */
 @Slf4j
 public class GameState {
 

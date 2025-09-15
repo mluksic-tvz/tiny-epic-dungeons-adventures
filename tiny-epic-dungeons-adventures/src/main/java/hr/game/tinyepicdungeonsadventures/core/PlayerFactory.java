@@ -8,6 +8,13 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A factory class for creating {@link Player} instances.
+ * <p>
+ * This class provides a static method to create a list of players
+ * based on a list of selected heroes. It is designed to be a utility
+ * class with a private constructor to prevent instantiation.
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PlayerFactory {
 

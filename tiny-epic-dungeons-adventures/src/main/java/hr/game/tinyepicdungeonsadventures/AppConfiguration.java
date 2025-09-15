@@ -9,6 +9,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * A utility class for managing and accessing application configuration properties.
+ * <p>
+ * This class loads configuration settings from an {@code application.properties} file
+ * during its initialization. It provides static methods to retrieve specific
+ * configuration values, such as RMI host, port, and service name.
+ */
 @Data
 @Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

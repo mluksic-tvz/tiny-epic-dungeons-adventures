@@ -14,6 +14,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A utility class to generate basic HTML documentation for a Java project
+ * by using reflection to inspect classes, fields, constructors, and methods.
+ * <p>
+ * Scans a specified base package, finds all class files, and
+ * generates an HTML file (`documentation.html`) that lists the members of each
+ * class. It provides a simple overview of the project's structure.
+ */
 public class DocumentationGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(DocumentationGenerator.class);

@@ -8,6 +8,14 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a "Free Action" that a player can take during their turn.
+ * <p>
+ * This specific implementation follows a prioritized, automatic logic:
+ * 1. It first searches the player's inventory for a healing potion to use.
+ * 2. If no potion is found, it discards the first available non-potion loot item.
+ * The action completes after the first possible operation is performed.
+ */
 @Slf4j
 public class FreeAction extends Action {
 

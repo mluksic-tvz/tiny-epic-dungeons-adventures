@@ -17,11 +17,13 @@ public class ChatServer {
 
     public static void main(String[] args) {
         try {
+            // Create RMI Registry on the configured port
             int port = AppConfiguration.getPort();
             String serviceName = AppConfiguration.getServiceName();
             LocateRegistry.createRegistry(port);
             log.info("RMI registry created on port {}.", port);
 
+            // Create JNDI InitialContext that points to the RMI Registry
             HashMap<String, String> env = new HashMap<>();
             env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.rmi.registry.RegistryContextFactory");
             env.put(Context.PROVIDER_URL, "rmi://localhost:" + port);
@@ -31,6 +33,7 @@ public class ChatServer {
             ChatRemoteService chatRemoteService = new ChatRemoteServiceImpl();
             ChatRemoteService skeleton = (ChatRemoteService) UnicastRemoteObject.exportObject(chatRemoteService, 0);
 
+            // Bind the remote service stub to a name in the JNDI directory
             context.rebind(serviceName, skeleton);
             log.info("Chat server started successfully.");
             log.info("Listening on port: {}", port);

@@ -6,6 +6,14 @@ import hr.game.tinyepicdungeonsadventures.model.character.monster.MonsterType;
 import hr.game.tinyepicdungeonsadventures.model.player.Player;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Represents the Torch Action, which is automatically executed at the end of every player's turn.
+ * <p>
+ * This action functions as the game's timer, advancing the torch track and triggering
+ * various negative events based on the torch's new position. These events can include
+ * traps that damage all heroes, the spawning of new monsters at the dungeon entrance,
+ * or ultimately ending the game if the torch burns out.
+ */
 @Slf4j
 public class TorchAction extends Action {
     private static final int MAX_TORCH = 5;

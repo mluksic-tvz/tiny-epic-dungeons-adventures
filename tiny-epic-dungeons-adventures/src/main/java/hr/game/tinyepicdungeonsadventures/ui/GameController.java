@@ -20,6 +20,15 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+/**
+ * The main controller for the Game UI.
+ * <p>
+ * This class handles all user interactions and updates the UI based on the
+ * game state. It acts as the bridge between the FXML view and the core game logic,
+ * delegating actions to classes like {@link GameEngine} and {@link GameTurnManager}.
+ * It manages player turns, game progress, and UI elements for the dungeon,
+ * player status, and chat.
+ */
 @Slf4j
 public class GameController {
 

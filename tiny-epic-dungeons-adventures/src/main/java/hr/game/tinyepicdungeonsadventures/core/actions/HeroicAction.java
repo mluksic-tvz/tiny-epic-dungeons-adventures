@@ -9,6 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+/**
+ * Represents the player's main Heroic Action for the turn, typically an attack or a spell.
+ * <p>
+ * This action is always directed at a specific monster target. The logic prioritizes
+ * casting a spell if the hero has enough mana. If not, it performs a basic physical attack.
+ * After the player's attack, this action also resolves the monster's retaliation
+ * if the monster survives.
+ */
 @Slf4j
 public class HeroicAction extends Action {
     private static final int BASE_DAMAGE = 1;

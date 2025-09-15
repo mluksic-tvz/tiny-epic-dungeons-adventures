@@ -9,6 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 
 import static hr.game.tinyepicdungeonsadventures.TinyEpicDungeonsAdventures.applicationConfiguration;
 
+/**
+ * Controller for the PlayerSelection UI.
+ * <p>
+ * This class handles the UI where users choose the number of players for the game.
+ * It sets the game's player configuration and transitions to the hero selection screen.
+ */
 @Slf4j
 public class PlayerSelectionController {
 

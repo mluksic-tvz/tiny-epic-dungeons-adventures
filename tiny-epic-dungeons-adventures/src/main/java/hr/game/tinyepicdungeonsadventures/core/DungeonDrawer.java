@@ -10,6 +10,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+/**
+ * Responsible for rendering the game's dungeon layout within a JavaFX {@link GridPane}.
+ * It visualizes the dungeon's revealed rooms, including players, monsters, and items,
+ * and handles user interactions such as clicking on game elements.
+ */
 public class DungeonDrawer {
 
     private final GridPane dungeonGridPane;

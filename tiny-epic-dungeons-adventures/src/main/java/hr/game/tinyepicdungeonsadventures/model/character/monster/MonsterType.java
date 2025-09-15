@@ -2,6 +2,12 @@ package hr.game.tinyepicdungeonsadventures.model.character.monster;
 
 import lombok.Getter;
 
+/**
+ * An enumeration of the different types of monsters in the game.
+ * <p>
+ * Each enum constant represents a specific monster type, defining its
+ * name, maximum health, and attack power.
+ */
 public enum MonsterType {
     GOBLIN("Goblin", 2, 1),
     ORC("Orc Brute", 4, 2),

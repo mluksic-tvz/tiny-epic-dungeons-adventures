@@ -6,6 +6,13 @@ import lombok.Getter;
 
 import java.util.List;
 
+/**
+ * The central component for managing the game's flow.
+ * <p>
+ * It orchestrates the game's state, including player turns and the dungeon's evolution.
+ * This class provides methods to start the game and advance to the next turn,
+ * ensuring the game progresses according to its rules.
+ */
 public class GameEngine {
 
     @Getter

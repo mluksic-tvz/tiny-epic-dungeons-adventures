@@ -21,6 +21,14 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A utility class for parsing dungeon data from an XML file.
+ * <p>
+ * This class uses the Java DOM parser to read an XML configuration file and
+ * construct a {@link Dungeon} object, along with all its associated rooms, monsters,
+ * and items. It provides a single public method to load a dungeon from a file,
+ * abstracting the parsing logic.
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DungeonXMLParser {
 
