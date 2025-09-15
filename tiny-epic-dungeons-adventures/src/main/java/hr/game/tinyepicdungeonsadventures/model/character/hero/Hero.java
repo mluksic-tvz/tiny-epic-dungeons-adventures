@@ -1,5 +1,8 @@
-package hr.game.tinyepicdungeonsadventures.model;
+package hr.game.tinyepicdungeonsadventures.model.character.hero;
 
+import hr.game.tinyepicdungeonsadventures.model.character.Character;
+import hr.game.tinyepicdungeonsadventures.model.items.Equipment;
+import hr.game.tinyepicdungeonsadventures.model.items.Item;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Slf4j
-public class Hero extends Character {
+public class Hero extends hr.game.tinyepicdungeonsadventures.model.character.Character {
     private int mana;
     private int maxMana;
     private int speed;

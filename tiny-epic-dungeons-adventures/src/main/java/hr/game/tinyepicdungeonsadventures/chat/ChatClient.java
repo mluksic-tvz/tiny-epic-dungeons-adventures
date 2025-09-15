@@ -29,8 +29,8 @@ public class ChatClient {
 
             return (ChatRemoteService) remoteObject;
 
-        } catch (NamingException e) {
-            throw new ChatException("Cannot find chat service in JNDI directory. Check if server has been started.", e);
+        } catch (NamingException ex) {
+            throw new ChatException("Cannot find chat service in JNDI directory. Check if server has been started.", ex);
         }
     }
 }

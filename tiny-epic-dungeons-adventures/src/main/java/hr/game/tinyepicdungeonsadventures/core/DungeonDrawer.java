@@ -1,9 +1,9 @@
 package hr.game.tinyepicdungeonsadventures.core;
 
-import hr.game.tinyepicdungeonsadventures.model.Item;
-import hr.game.tinyepicdungeonsadventures.model.Monster;
-import hr.game.tinyepicdungeonsadventures.model.Player;
-import hr.game.tinyepicdungeonsadventures.model.Room;
+import hr.game.tinyepicdungeonsadventures.model.items.Item;
+import hr.game.tinyepicdungeonsadventures.model.character.monster.Monster;
+import hr.game.tinyepicdungeonsadventures.model.player.Player;
+import hr.game.tinyepicdungeonsadventures.model.dungeon.Room;
 import hr.game.tinyepicdungeonsadventures.ui.GameController;
 import javafx.scene.Cursor;
 import javafx.scene.control.Label;

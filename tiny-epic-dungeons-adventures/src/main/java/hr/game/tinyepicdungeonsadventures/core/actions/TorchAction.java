@@ -1,9 +1,9 @@
 package hr.game.tinyepicdungeonsadventures.core.actions;
 
 import hr.game.tinyepicdungeonsadventures.core.GameState;
-import hr.game.tinyepicdungeonsadventures.model.Monster;
-import hr.game.tinyepicdungeonsadventures.model.MonsterType;
-import hr.game.tinyepicdungeonsadventures.model.Player;
+import hr.game.tinyepicdungeonsadventures.model.character.monster.Monster;
+import hr.game.tinyepicdungeonsadventures.model.character.monster.MonsterType;
+import hr.game.tinyepicdungeonsadventures.model.player.Player;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -37,7 +37,7 @@ public class TorchAction extends Action {
                 log.info("A Skeleton appears at the dungeon entrance!");
             }
             case MAX_TORCH -> {
-                state.endGame();
+                state.endGame(false);
                 log.info("Torch has burned out – heroes lose the game!");
             }
             default -> log.info("No special torch effects this turn.");

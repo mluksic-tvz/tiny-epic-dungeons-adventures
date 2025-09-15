@@ -1,8 +1,8 @@
 package hr.game.tinyepicdungeonsadventures.ui;
 
 import hr.game.tinyepicdungeonsadventures.TinyEpicDungeonsAdventures;
-import hr.game.tinyepicdungeonsadventures.model.Hero;
-import hr.game.tinyepicdungeonsadventures.model.Spell;
+import hr.game.tinyepicdungeonsadventures.model.character.hero.Hero;
+import hr.game.tinyepicdungeonsadventures.model.character.hero.Spell;
 import hr.game.tinyepicdungeonsadventures.utils.DialogUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

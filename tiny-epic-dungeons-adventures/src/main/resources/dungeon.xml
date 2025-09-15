@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dungeon>
+    <lootPool>
+        <item type="loot" name="Magic Ring" attack="0" defense="0"/>
+        <item type="potion" name="Standard Healing Potion" heal="5"/>
+        <item type="loot" name="Wooden Shield" attack="0" defense="1"/>
+        <item type="loot" name="Dagger" attack="1" defense="0"/>
+        <item type="loot" name="Ancient Scroll" attack="0" defense="0"/>
+    </lootPool>
+
+    <roomPool>
+        <room id="Entrance Hall">
+        </room>
+        <room id="Goblin Cave">
+            <monster type="GOBLIN"/>
+        </room>
+        <room id="Orc Barracks">
+            <monster type="ORC"/>
+            <item type="loot" name="Old Sword" attack="1" defense="0"/>
+        </room>
+        <room id="Treasure Room">
+            <item type="potion" name="Minor Healing Potion" heal="3"/>
+        </room>
+        <room id="Skeleton Crypt">
+            <monster type="SKELETON"/>
+        </room>
+        <room id="Spider Nest">
+            <monster type="GOBLIN"/>
+        </room>
+        <room id="Flooded Passage">
+            <item type="loot" name="Magic Amulet" attack="0" defense="0"/>
+        </room>
+    </roomPool>
+
+    <bossLair id="The Boss's Lair">
+        <monster type="BOSS"/>
+    </bossLair>
+</dungeon>

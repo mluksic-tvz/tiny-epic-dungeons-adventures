@@ -1,4 +1,4 @@
-package hr.game.tinyepicdungeonsadventures.model;
+package hr.game.tinyepicdungeonsadventures.model.items;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

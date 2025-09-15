@@ -22,8 +22,8 @@ public class ChatUtils {
         try {
             chatRemoteService.sendChatMessage(applicationConfiguration.getPlayerType().name()
                     + ": " + chatMessage);
-        } catch (RemoteException e) {
-            throw new ChatException("Error while sending a chat message!", e);
+        } catch (RemoteException ex) {
+            throw new ChatException("Error while sending a chat message!", ex);
         }
     }
 
@@ -33,8 +33,8 @@ public class ChatUtils {
                 List<String> chatMessages = chatRemoteService.getAllChatMessages();
                 String chatMessagesString = String.join("\n", chatMessages);
                 chatTextArea.setText(chatMessagesString);
-            } catch (RemoteException e) {
-                throw new ChatException("An error occured while creating the timeline for chat!", e);
+            } catch (RemoteException ex) {
+                throw new ChatException("An error occured while creating the timeline for chat!", ex);
             }
         }), new KeyFrame(Duration.seconds(1)));
         chatMessagesTimeline.setCycleCount(Animation.INDEFINITE);

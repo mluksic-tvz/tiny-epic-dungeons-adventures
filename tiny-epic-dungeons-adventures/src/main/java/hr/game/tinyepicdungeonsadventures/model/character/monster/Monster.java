@@ -1,5 +1,6 @@
-package hr.game.tinyepicdungeonsadventures.model;
+package hr.game.tinyepicdungeonsadventures.model.character.monster;
 
+import hr.game.tinyepicdungeonsadventures.model.character.Character;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

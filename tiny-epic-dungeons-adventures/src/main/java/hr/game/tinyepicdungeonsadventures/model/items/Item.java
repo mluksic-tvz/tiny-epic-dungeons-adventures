@@ -1,4 +1,4 @@
-package hr.game.tinyepicdungeonsadventures.model;
+package hr.game.tinyepicdungeonsadventures.model.items;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,10 +1,10 @@
 package hr.game.tinyepicdungeonsadventures.core.actions;
 
 import hr.game.tinyepicdungeonsadventures.core.GameState;
-import hr.game.tinyepicdungeonsadventures.model.Monster;
-import hr.game.tinyepicdungeonsadventures.model.Player;
-import hr.game.tinyepicdungeonsadventures.model.Room;
-import hr.game.tinyepicdungeonsadventures.model.Spell;
+import hr.game.tinyepicdungeonsadventures.model.character.monster.Monster;
+import hr.game.tinyepicdungeonsadventures.model.player.Player;
+import hr.game.tinyepicdungeonsadventures.model.dungeon.Room;
+import hr.game.tinyepicdungeonsadventures.model.character.hero.Spell;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

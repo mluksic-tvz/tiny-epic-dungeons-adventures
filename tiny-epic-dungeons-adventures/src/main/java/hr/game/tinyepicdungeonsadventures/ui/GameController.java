@@ -3,7 +3,13 @@ package hr.game.tinyepicdungeonsadventures.ui;
 import hr.game.tinyepicdungeonsadventures.TinyEpicDungeonsAdventures;
 import hr.game.tinyepicdungeonsadventures.chat.ChatManager;
 import hr.game.tinyepicdungeonsadventures.core.*;
-import hr.game.tinyepicdungeonsadventures.model.*;
+import hr.game.tinyepicdungeonsadventures.model.character.hero.Hero;
+import hr.game.tinyepicdungeonsadventures.model.character.monster.Monster;
+import hr.game.tinyepicdungeonsadventures.model.dungeon.Dungeon;
+import hr.game.tinyepicdungeonsadventures.model.dungeon.Room;
+import hr.game.tinyepicdungeonsadventures.model.items.Item;
+import hr.game.tinyepicdungeonsadventures.model.player.Player;
+import hr.game.tinyepicdungeonsadventures.model.player.PlayerStatusManager;
 import hr.game.tinyepicdungeonsadventures.utils.DialogUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,7 +18,6 @@ import javafx.scene.text.Text;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -26,6 +31,7 @@ public class GameController {
 
     private GameEngine gameEngine;
     private GameTurnManager turnManager;
+    private PlayerStatusManager playerStatusManager;
     private DungeonDrawer dungeonDrawer;
 
     @FXML private Label heroNameLabel;
@@ -45,21 +51,16 @@ public class GameController {
     private Label selectedMonsterLabel = null;
 
     public void initializeGame(List<Hero> selectedHeroes) {
-        List<Player> players = new ArrayList<>();
-        for (int i = 0; i < selectedHeroes.size(); i++) {
-            Player player = new Player("Player " + (i + 1));
-            player.setHero(selectedHeroes.get(i));
-            players.add(player);
-        }
-
-        Dungeon dungeon = DungeonFactory.createTestDungeon();
+        List<Player> players = PlayerFactory.createPlayers(selectedHeroes);
+        Dungeon dungeon = DungeonFactory.createDungeon();
 
         this.turnManager = new GameTurnManager();
         this.gameEngine = new GameEngine(players, dungeon);
         this.dungeonDrawer = new DungeonDrawer(dungeonGridPane, this);
+        this.playerStatusManager = new PlayerStatusManager(heroNameLabel, healthProgressBar, healthValueLabel, manaProgressBar, manaValueLabel, inventoryListView);
         this.chatManager.initializeChat();
-        gameEngine.startGame();
 
+        gameEngine.startGame();
         log.info("Game started with {} players!", players.size());
 
         inventoryListView.setOnMouseClicked(event -> onInventoryItemClicked());
@@ -68,18 +69,23 @@ public class GameController {
 
     @FXML
     private void onMoveClicked() {
+        if (isCurrentPlayerDefeated())
+            return;
+
         GameState state = gameEngine.getState();
         Player currentPlayer = state.getCurrentPlayer();
+
         log.info("{} attempts movement action.", currentPlayer.getHero().getName());
-
         turnManager.performMovementAction(state, currentPlayer);
-
         updateUI();
         moveButton.setDisable(true);
     }
 
     @FXML
     private void onHeroicActionClicked() {
+        if (isCurrentPlayerDefeated())
+            return;
+
         GameState state = gameEngine.getState();
         Player currentPlayer = state.getCurrentPlayer();
 
@@ -112,7 +118,6 @@ public class GameController {
         log.info("{} ends their turn.", currentPlayer.getHero().getName());
 
         turnManager.endPlayerTurn(state, currentPlayer);
-
         state.checkForLossCondition();
 
         if (state.isGameOver()) {
@@ -132,40 +137,16 @@ public class GameController {
     private void updateUI() {
         GameState currentState = gameEngine.getState();
         Player currentPlayer = currentState.getCurrentPlayer();
-
-        updatePlayerInfo(currentPlayer);
+        playerStatusManager.update(currentPlayer);
         updateTorchTrack(currentState);
         dungeonDrawer.render(currentState);
-
         turnIndicatorText.setText("Turn: " + currentPlayer.getId() + " (" + currentPlayer.getHero().getName() + ")");
-    }
-
-    private void updatePlayerInfo(Player currentPlayer) {
-        Hero hero = currentPlayer.getHero();
-        heroNameLabel.setText("Hero: " + hero.getName());
-        healthProgressBar.setProgress((double) hero.getHealth() / hero.getMaxHealth());
-        healthValueLabel.setText(hero.getHealth() + " / " + hero.getMaxHealth());
-        manaProgressBar.setProgress((double) hero.getMana() / hero.getMaxMana());
-        manaValueLabel.setText(hero.getMana() + " / " + hero.getMaxMana());
-        inventoryListView.getItems().clear();
-        inventoryListView.getItems().addAll(currentPlayer.getInventory().getItems());
-        inventoryListView.setCellFactory(param -> new ListCell<>() {
-            @Override
-            protected void updateItem(Item item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null || item.getName() == null) {
-                    setText(null);
-                } else {
-                    setText(item.getName());
-                }
-            }
-        });
     }
 
     public void onInventoryItemClicked() {
         Item selectedItem = inventoryListView.getSelectionModel().getSelectedItem();
 
-        if (selectedItem == null)
+        if (selectedItem == null || isCurrentPlayerDefeated())
             return;
 
         Player currentPlayer = gameEngine.getState().getCurrentPlayer();
@@ -193,11 +174,9 @@ public class GameController {
 
     public void onMonsterClicked(Monster monster, Label monsterLabel) {
         clearTargetSelection();
-
         selectedMonsterTarget = monster;
         selectedMonsterLabel = monsterLabel;
         log.info("Selected target: {}", monster.getName());
-
         selectedMonsterLabel.setStyle("-fx-text-fill: #ff6b6b; -fx-font-weight: bold; -fx-border-color: red; -fx-border-width: 1;");
         heroicActionButton.setDisable(false);
     }
@@ -217,23 +196,28 @@ public class GameController {
 
     public void clearTargetSelection() {
         selectedMonsterTarget = null;
-        if (selectedMonsterLabel != null) {
+
+        if (selectedMonsterLabel != null)
             selectedMonsterLabel.setStyle("-fx-text-fill: #ff6b6b; -fx-font-weight: bold;");
-        }
+
         selectedMonsterLabel = null;
     }
 
     private void resetTurnUI() {
         Player newCurrentPlayer = gameEngine.getState().getCurrentPlayer();
         newCurrentPlayer.getHero().regenerateMana(1);
-
-        log.info("{} regenerates 1 mana at the start of their turn. (Now {}/{})",
-                newCurrentPlayer.getHero().getName(),
-                newCurrentPlayer.getHero().getMana(),
-                newCurrentPlayer.getHero().getMaxMana());
-
+        log.info("{} regenerates 1 mana at the start of their turn. (Now {}/{})", newCurrentPlayer.getHero().getName(), newCurrentPlayer.getHero().getMana(), newCurrentPlayer.getHero().getMaxMana());
         moveButton.setDisable(false);
         heroicActionButton.setDisable(true);
         clearTargetSelection();
+    }
+
+    private boolean isCurrentPlayerDefeated() {
+        Player currentPlayer = gameEngine.getState().getCurrentPlayer();
+        if (!currentPlayer.getHero().isAlive()) {
+            log.warn("Cannot perform action, hero {} is defeated.", currentPlayer.getHero().getName());
+            return true;
+        }
+        return false;
     }
 }

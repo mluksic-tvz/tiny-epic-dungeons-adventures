@@ -32,8 +32,8 @@ public class ChatManager {
             this.chatRemoteService = ChatClient.connect();
             Timeline chatTimeline = ChatUtils.getChatTimeline(chatRemoteService, chatTextArea);
             chatTimeline.play();
-        } catch (Exception e) {
-            log.error("Failed to connect to chat service", e);
+        } catch (Exception ex) {
+            log.error("Failed to connect to chat service", ex);
             DialogUtils.showDialog(Alert.AlertType.WARNING, "Chat Unavailable", "Could not connect to the chat service.", "Please ensure the chat server is running.");
             chatInputField.setDisable(true);
             sendMessageButton.setDisable(true);

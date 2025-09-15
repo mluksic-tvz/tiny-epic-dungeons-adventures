@@ -1,4 +1,4 @@
-package hr.game.tinyepicdungeonsadventures.model;
+package hr.game.tinyepicdungeonsadventures.model.character.hero;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

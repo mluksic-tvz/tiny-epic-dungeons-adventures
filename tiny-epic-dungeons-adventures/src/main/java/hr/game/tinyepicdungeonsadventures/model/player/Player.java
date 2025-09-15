@@ -1,5 +1,8 @@
-package hr.game.tinyepicdungeonsadventures.model;
+package hr.game.tinyepicdungeonsadventures.model.player;
 
+import hr.game.tinyepicdungeonsadventures.model.character.hero.Hero;
+import hr.game.tinyepicdungeonsadventures.model.items.Inventory;
+import hr.game.tinyepicdungeonsadventures.model.items.Item;
 import lombok.*;
 
 @Getter

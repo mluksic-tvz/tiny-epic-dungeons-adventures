@@ -1,5 +1,7 @@
-package hr.game.tinyepicdungeonsadventures.model;
+package hr.game.tinyepicdungeonsadventures.model.dungeon;
 
+import hr.game.tinyepicdungeonsadventures.model.character.monster.Monster;
+import hr.game.tinyepicdungeonsadventures.model.items.Item;
 import lombok.*;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package hr.game.tinyepicdungeonsadventures.core;
 
-import hr.game.tinyepicdungeonsadventures.model.Dungeon;
-import hr.game.tinyepicdungeonsadventures.model.Player;
+import hr.game.tinyepicdungeonsadventures.model.dungeon.Dungeon;
+import hr.game.tinyepicdungeonsadventures.model.player.Player;
 import lombok.Getter;
 
 import java.util.List;

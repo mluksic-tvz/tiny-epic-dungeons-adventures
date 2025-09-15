@@ -1,6 +1,10 @@
 package hr.game.tinyepicdungeonsadventures.core;
 
-import hr.game.tinyepicdungeonsadventures.model.*;
+import hr.game.tinyepicdungeonsadventures.model.character.monster.MonsterType;
+import hr.game.tinyepicdungeonsadventures.model.dungeon.Dungeon;
+import hr.game.tinyepicdungeonsadventures.model.dungeon.Room;
+import hr.game.tinyepicdungeonsadventures.model.items.Item;
+import hr.game.tinyepicdungeonsadventures.model.player.Player;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -100,9 +104,19 @@ public class GameState {
         log.info("Torch advanced to position {}", torchPosition);
     }
 
-    public void endGame() {
+    public void endGame(boolean playerVictory) {
+
+        if (isGameOver)
+            return;
+
         isGameOver = true;
-        log.info("Game over! Heroes have lost.");
+        this.victory = playerVictory;
+
+        if (victory) {
+            log.info("Game Over! The heroes won!");
+        } else {
+            log.info("Game Over! The heroes have been defeated.");
+        }
     }
 
     public void checkForWinCondition() {
@@ -111,9 +125,9 @@ public class GameState {
                 .anyMatch(monster -> monster.getType() == MonsterType.BOSS && monster.isAlive());
 
         if (!bossExistsAndIsAlive) {
-            log.info("The Dungeon Boss has been defeated! The heroes won!");
+            log.info("The Dungeon Boss has been defeated!");
             this.victory = true;
-            endGame();
+            endGame(true);
         }
     }
 
@@ -121,8 +135,7 @@ public class GameState {
         boolean allPlayersDefeated = players.stream().allMatch(p -> !p.getHero().isAlive());
 
         if (allPlayersDefeated) {
-            log.error("All heroes have been defeated! The game is over.");
-            endGame();
+            endGame(false);
         }
     }
 

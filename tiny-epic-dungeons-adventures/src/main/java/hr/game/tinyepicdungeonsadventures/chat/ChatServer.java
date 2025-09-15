@@ -36,8 +36,8 @@ public class ChatServer {
             log.info("Listening on port: {}", port);
             log.info("Waiting for client connection...");
 
-        } catch (RemoteException | NamingException e) {
-            log.error("Error while setting up chat server.", e);
+        } catch (RemoteException | NamingException ex) {
+            log.error("Error while setting up chat server.", ex);
         }
     }
 }

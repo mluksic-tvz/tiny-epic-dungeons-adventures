@@ -1,7 +1,7 @@
 package hr.game.tinyepicdungeonsadventures.ui;
 
 import hr.game.tinyepicdungeonsadventures.TinyEpicDungeonsAdventures;
-import hr.game.tinyepicdungeonsadventures.model.PlayerType;
+import hr.game.tinyepicdungeonsadventures.model.player.PlayerType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import lombok.Setter;

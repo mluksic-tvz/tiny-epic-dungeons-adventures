@@ -1,8 +1,8 @@
 package hr.game.tinyepicdungeonsadventures;
 
 import hr.game.tinyepicdungeonsadventures.chat.ChatManager;
-import hr.game.tinyepicdungeonsadventures.model.ApplicationConfiguration;
-import hr.game.tinyepicdungeonsadventures.model.Hero;
+import hr.game.tinyepicdungeonsadventures.model.AppConfiguration;
+import hr.game.tinyepicdungeonsadventures.model.character.hero.Hero;
 import hr.game.tinyepicdungeonsadventures.ui.GameController;
 import hr.game.tinyepicdungeonsadventures.ui.HeroSelectionController;
 import hr.game.tinyepicdungeonsadventures.ui.MainMenuController;
@@ -23,7 +23,7 @@ import java.util.List;
 @Slf4j
 public class TinyEpicDungeonsAdventures extends Application {
 
-    public static final ApplicationConfiguration applicationConfiguration = new ApplicationConfiguration();
+    public static final AppConfiguration applicationConfiguration = new AppConfiguration();
 
     private Stage primaryStage;
 
@@ -33,8 +33,8 @@ public class TinyEpicDungeonsAdventures extends Application {
 
         try {
             Font.loadFont(getClass().getResource("/hr/game/tinyepicdungeonsadventures/fonts/MedievalSharp-Regular.ttf").toExternalForm(), 10);
-        } catch (Exception e) {
-            log.error("Failed to load custom font", e);
+        } catch (Exception ex) {
+            log.error("Failed to load custom font", ex);
         }
 
         showMainMenu();
@@ -52,8 +52,8 @@ public class TinyEpicDungeonsAdventures extends Application {
             primaryStage.setTitle("Tiny Epic Dungeon Adventures");
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch (Exception e) {
-            log.error("Error while loading MainMenu scene", e);
+        } catch (Exception ex) {
+            log.error("Error while loading MainMenu scene", ex);
         }
     }
 
@@ -70,8 +70,8 @@ public class TinyEpicDungeonsAdventures extends Application {
             primaryStage.setTitle("Choose Your Hero");
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch (Exception e) {
-            log.error("Error while loading HeroSelection scene", e);
+        } catch (Exception ex) {
+            log.error("Error while loading HeroSelection scene", ex);
         }
     }
 
@@ -86,8 +86,8 @@ public class TinyEpicDungeonsAdventures extends Application {
             primaryStage.setTitle("Select Number of Players");
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch (Exception e) {
-            log.error("Error while loading PlayerSelection scene", e);
+        } catch (Exception ex) {
+            log.error("Error while loading PlayerSelection scene", ex);
         }
     }
 
@@ -116,8 +116,8 @@ public class TinyEpicDungeonsAdventures extends Application {
             primaryStage.setOnCloseRequest(e -> Platform.exit());
 
             primaryStage.show();
-        } catch (Exception e) {
-            log.error("Error while loading Game scene", e);
+        } catch (Exception ex) {
+            log.error("Error while loading Game scene", ex);
         }
     }
 
