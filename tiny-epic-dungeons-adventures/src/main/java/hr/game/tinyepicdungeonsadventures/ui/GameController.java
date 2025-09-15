@@ -86,11 +86,22 @@ public class GameController {
         if (selectedMonsterTarget != null) {
             log.info("{} attempts heroic action on {}.", currentPlayer.getHero().getName(), selectedMonsterTarget.getName());
             turnManager.performHeroicAction(state, currentPlayer, selectedMonsterTarget);
+            state.checkForWinCondition();
             heroicActionButton.setDisable(true);
         } else {
             log.warn("Action button clicked, but no target is selected.");
             DialogUtils.showDialog(Alert.AlertType.WARNING, "No Target", "Please select a monster to perform an action.", "");
         }
+
+        if (state.isVictory()) {
+            updateUI();
+            endTurnButton.setDisable(true);
+            moveButton.setDisable(true);
+            heroicActionButton.setDisable(true);
+            DialogUtils.showDialog(Alert.AlertType.INFORMATION, "VICTORY!", "The heroes have defeated the Dungeon Boss!", "");
+            return;
+        }
+
         updateUI();
     }
 
@@ -154,21 +165,24 @@ public class GameController {
     public void onInventoryItemClicked() {
         Item selectedItem = inventoryListView.getSelectionModel().getSelectedItem();
 
-        if (selectedItem == null) {
+        if (selectedItem == null)
             return;
-        }
+
+        Player currentPlayer = gameEngine.getState().getCurrentPlayer();
 
         if (selectedItem.isHealingPotion()) {
-            Player currentPlayer = gameEngine.getState().getCurrentPlayer();
-
             if (currentPlayer.getInventory().removeItem(selectedItem)) {
                 int heal = selectedItem.getHealAmount();
                 currentPlayer.getHero().heal(heal);
                 log.info("{} uses {} and heals for {} HP.", currentPlayer.getHero().getName(), selectedItem.getName(), heal);
                 updateUI();
             }
+        } else if (selectedItem.getAttackBonus() > 0 || selectedItem.getDefenseBonus() > 0) {
+            log.info("{} equips {}.", currentPlayer.getHero().getName(), selectedItem.getName());
+            currentPlayer.getHero().equip(selectedItem);
+            updateUI();
         } else {
-            log.info("{} is not a usable item in this context.", selectedItem.getName());
+            log.info("{} cannot be used or equipped in this context.", selectedItem.getName());
         }
     }
 
@@ -210,6 +224,14 @@ public class GameController {
     }
 
     private void resetTurnUI() {
+        Player newCurrentPlayer = gameEngine.getState().getCurrentPlayer();
+        newCurrentPlayer.getHero().regenerateMana(1);
+
+        log.info("{} regenerates 1 mana at the start of their turn. (Now {}/{})",
+                newCurrentPlayer.getHero().getName(),
+                newCurrentPlayer.getHero().getMana(),
+                newCurrentPlayer.getHero().getMaxMana());
+
         moveButton.setDisable(false);
         heroicActionButton.setDisable(true);
         clearTargetSelection();

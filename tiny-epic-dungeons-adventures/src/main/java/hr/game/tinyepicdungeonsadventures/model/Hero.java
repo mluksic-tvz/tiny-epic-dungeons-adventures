@@ -2,6 +2,7 @@ package hr.game.tinyepicdungeonsadventures.model;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +14,14 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
+@Slf4j
 public class Hero extends Character {
     private int mana;
     private int maxMana;
     private int speed;
     private int maxSpeed;
     private List<Spell> spells = new ArrayList<>();
+    private Equipment equipment = new Equipment();
 
     public Hero(String name, int maxHealth, int maxMana, int speed) {
         super(name, maxHealth);
@@ -26,6 +29,17 @@ public class Hero extends Character {
         this.mana = maxMana;
         this.maxSpeed = speed;
         this.speed = speed;
+    }
+
+    @Override
+    public void takeDamage(int amount) {
+        int defense = getTotalDefenseBonus();
+        int damageTaken = Math.max(0, amount - defense);
+
+        if (defense > 0)
+            log.info("{}'s equipment blocks {} damage!", getName(), defense);
+
+        super.takeDamage(damageTaken);
     }
 
     public void learnSpell(Spell spell) {
@@ -40,6 +54,24 @@ public class Hero extends Character {
         mana -= spell.getCost();
         target.takeDamage(spell.getPower());
         return true;
+    }
+
+    public void equip(Item item) {
+        equipment.equip(item);
+    }
+
+    public int getTotalAttackBonus() {
+        if (equipment.getWeapon() != null) {
+            return equipment.getWeapon().getAttackBonus();
+        }
+        return 0;
+    }
+
+    public int getTotalDefenseBonus() {
+        if (equipment.getShield() != null) {
+            return equipment.getShield().getDefenseBonus();
+        }
+        return 0;
     }
 
     public void regenerateMana(int amount) {

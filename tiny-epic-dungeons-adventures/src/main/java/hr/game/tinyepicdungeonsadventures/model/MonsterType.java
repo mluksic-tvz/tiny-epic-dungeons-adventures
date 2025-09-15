@@ -5,7 +5,8 @@ import lombok.Getter;
 public enum MonsterType {
     GOBLIN("Goblin", 2, 1),
     ORC("Orc Brute", 4, 2),
-    SKELETON("Skeleton", 3, 1);
+    SKELETON("Skeleton", 3, 1),
+    BOSS("Dungeon Boss", 10, 3);
 
     @Getter
     private final String name;

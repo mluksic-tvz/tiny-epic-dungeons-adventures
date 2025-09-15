@@ -14,17 +14,18 @@ public class Dungeon {
     private Deque<Room> roomCardDeck;
     private Deque<Item> lootCardDeck;
 
-    public Dungeon(List<Room> rooms, List<Item> lootPool) {
-        this.rooms = new ArrayList<>(Objects.requireNonNull(rooms));
-        this.lootPool = new ArrayList<>(Objects.requireNonNull(lootPool));
-        this.monstersAtTheEntrance = new ArrayList<>();
-    }
+    public Dungeon(List<Room> regularRooms, Room bossLair, List<Item> lootPool) {
+        Collections.shuffle(regularRooms);
 
-    public void shuffleAndPrepareCardDecks() {
-        Collections.shuffle(lootPool);
-        Collections.shuffle(rooms);
-        roomCardDeck = new ArrayDeque<>(rooms);
-        lootCardDeck = new ArrayDeque<>(lootPool);
+        this.rooms = new ArrayList<>(regularRooms);
+        this.rooms.add(bossLair);
+        this.roomCardDeck = new ArrayDeque<>(this.rooms);
+        this.lootPool = new ArrayList<>(lootPool);
+
+        Collections.shuffle(this.lootPool);
+        this.lootCardDeck = new ArrayDeque<>(this.lootPool);
+
+        this.monstersAtTheEntrance = new ArrayList<>();
     }
 
     public Room drawRoom() {

@@ -9,6 +9,8 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public abstract class Item {
     private final String name;
+    private final int attackBonus;
+    private final int defenseBonus;
 
     public boolean isHealingPotion() {
         return false;

@@ -64,8 +64,8 @@ public class HeroicAction extends Action {
     }
 
     private void attack(Player player, Monster target) {
-        log.info("Not enough mana for a spell, performing a basic attack.");
-        target.takeDamage(BASE_DAMAGE);
-        log.info("{} attacks {} for {} damage (HP now {}).", player.getHero().getName(), target.getName(), BASE_DAMAGE, target.getHealth());
+        int totalDamage = BASE_DAMAGE + player.getHero().getTotalAttackBonus();
+        target.takeDamage(totalDamage);
+        log.info("{} attacks {} for {} damage (HP now {}).", player.getHero().getName(), target.getName(), totalDamage, target.getHealth());
     }
 }

@@ -1,9 +1,6 @@
 package hr.game.tinyepicdungeonsadventures.core;
 
-import hr.game.tinyepicdungeonsadventures.model.Dungeon;
-import hr.game.tinyepicdungeonsadventures.model.Item;
-import hr.game.tinyepicdungeonsadventures.model.Player;
-import hr.game.tinyepicdungeonsadventures.model.Room;
+import hr.game.tinyepicdungeonsadventures.model.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,6 +25,9 @@ public class GameState {
     @Getter
     private boolean isGameOver = false;
 
+    @Getter
+    private boolean victory = false;
+
     private int currentPlayerIndex = 0;
     private final Map<Player, Room> currentRoomMap = new HashMap<>();
 
@@ -40,8 +40,7 @@ public class GameState {
         torchPosition = 0;
         log.info("Torch reset to position {}", torchPosition);
 
-        dungeon.shuffleAndPrepareCardDecks();
-        log.info("Shuffled and prepared room & loot decks");
+        log.info("Dungeon card decks have been prepared and shuffled.");
 
         for (Player player : players) {
             player.getInventory().clear();
@@ -104,6 +103,18 @@ public class GameState {
     public void endGame() {
         isGameOver = true;
         log.info("Game over! Heroes have lost.");
+    }
+
+    public void checkForWinCondition() {
+        boolean bossExistsAndIsAlive = dungeon.getRooms().stream()
+                .flatMap(room -> room.getMonsters().stream())
+                .anyMatch(monster -> monster.getType() == MonsterType.BOSS && monster.isAlive());
+
+        if (!bossExistsAndIsAlive) {
+            log.info("The Dungeon Boss has been defeated! The heroes won!");
+            this.victory = true;
+            endGame();
+        }
     }
 
     public void checkForLossCondition() {
