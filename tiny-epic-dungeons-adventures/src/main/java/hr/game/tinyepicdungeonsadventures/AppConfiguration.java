@@ -38,6 +38,6 @@ public class AppConfiguration {
     }
 
     public static String getServiceName() {
-        return properties.getProperty("jndi.service.name");
+        return properties.getProperty("chat.service.name");
     }
 }
